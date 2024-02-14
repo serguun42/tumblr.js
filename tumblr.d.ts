@@ -7,7 +7,7 @@ export class Client {
 	 * Package version
 	 * @readonly
 	 */
-	static readonly version: "4.1.2";
+	static readonly version: "4.2.0";
 	/**
 	 * Creates a Tumblr API client using the given options
 	 *

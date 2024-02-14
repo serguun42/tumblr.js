@@ -20,8 +20,8 @@ class TumblrError extends Error {
 	 * @param {string} message
 	 */
 	constructor(code, message) {
-		this.code = code;
 		super(message);
+		if (Number.isInteger(code)) this.code = code;
 	}
 }
 
@@ -30,7 +30,7 @@ class Client {
 	 * Package version
 	 * @readonly
 	 */
-	static version = "4.1.2";
+	static version = "4.2.0";
 
 	/**
 	 * @typedef {import('./types').PostFormatFilter} PostFormatFilter
