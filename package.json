@@ -1,0 +1,59 @@
+{
+	"name": "@serguun42/tumblr.js",
+	"version": "4.0.2",
+	"description": "Modified TypeScript & JavaScript client for the Tumblr API",
+	"main": "./tumblr.js",
+	"type": "commonjs",
+	"exports": {
+		"import": "./tumblr.js",
+		"require": "./tumblr.js",
+		"types": "./tumblr.d.ts"
+	},
+	"types": "./tumblr.d.ts",
+	"engines": {
+		"node": ">=16",
+		"npm": ">=8"
+	},
+	"homepage": "https://www.npmjs.com/package/@serguun42/tumblr.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/serguun42/tumblr.js.git"
+	},
+	"keywords": [
+		"tumblr",
+		"api"
+	],
+	"author": "Tumblr",
+	"license": "Apache-2.0",
+	"contributors": [
+		{
+			"name": "Keith McKnight",
+			"email": "keith@mcknig.ht"
+		},
+		{
+			"name": "Bryan Irace",
+			"email": "bryan.irace@gmail.com"
+		},
+		{
+			"name": "John Crepezzi",
+			"email": "john.crepezzi@gmail.com"
+		},
+		{
+			"name": "Serge K",
+			"email": "npm@serguun42.ru"
+		}
+	],
+	"dependencies": {
+		"@types/node": ">=16",
+		"@types/oauth": "^0.9.1",
+		"form-data": "^4.0.0",
+		"oauth": "^0.10.0"
+	},
+	"devDependencies": {
+		"@typescript-eslint/parser": "^6.5.0",
+		"eslint": "^8.48.0",
+		"eslint-config-prettier": "^9.0.0",
+		"prettier": "^3.0.3",
+		"typescript": "^5.2.2"
+	}
+}
