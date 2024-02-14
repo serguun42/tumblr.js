@@ -12,12 +12,25 @@ const { ReadStream } = require("node:fs");
 
 const API_BASE_URL = "https://api.tumblr.com"; // deliberately no trailing slash
 
+class TumblrError extends Error {
+	code = 500;
+
+	/**
+	 * @param {number} code
+	 * @param {string} message
+	 */
+	constructor(code, message) {
+		this.code = code;
+		super(message);
+	}
+}
+
 class Client {
 	/**
 	 * Package version
 	 * @readonly
 	 */
-	static version = "4.1.1";
+	static version = "4.1.2";
 
 	/**
 	 * @typedef {import('./types').PostFormatFilter} PostFormatFilter
@@ -194,8 +207,9 @@ class Client {
 			reject = promiseReject;
 		});
 
-		/** @type {(err: Error | null, responseBody: Record<string, any> | null) => void} */
-		const callback = (e, responseBody) => {
+		let responseData = "";
+		/** @type {(err: Error | TumblrError | undefined, responseBody: Record<string, any> | undefined) => void} */
+		const callbackForPromise = (e, responseBody) => {
 			if (e) {
 				reject(e);
 				return;
@@ -275,44 +289,47 @@ class Client {
 			}
 		}
 
-		let responseData = "";
-		let callbackCalled = false;
+		let responseEnded = false;
 
 		request.on("response", (response) => {
 			response.setEncoding("utf8");
+
 			response.on("data", (chunk) => {
 				responseData += chunk;
 			});
+
 			response.on("end", () => {
-				if (callbackCalled) return;
-				callbackCalled = true;
+				if (responseEnded) return;
+				responseEnded = true;
 
 				/** @type {Record<string, any>} */
 				let parsedData;
 				try {
 					parsedData = JSON.parse(responseData);
 				} catch (err) {
-					callback(new Error(`API error (malformed API response): ${responseData}`));
+					callbackForPromise(new TumblrError(406, `Cannot parse Tumblr JSON: ${responseData}`));
 					return;
 				}
 
 				const statusCode = /** @type {number} */ (response.statusCode);
-				if (statusCode < 200 || statusCode > 399) {
-					const errString = parsedData?.meta?.msg ?? parsedData?.error ?? "unknown";
-					return callback(new Error(`API error: ${response.statusCode} ${errString}`));
+				if (Number.isInteger(statusCode) && (statusCode < 200 || statusCode > 399)) {
+					const errString = parsedData?.meta?.msg ?? parsedData?.error ?? "Unknown error";
+					return callbackForPromise(new TumblrError(statusCode, errString));
 				}
 
-				if (parsedData?.response) return callback(null, parsedData.response);
+				if (parsedData?.response) return callbackForPromise(null, parsedData.response);
 
-				return callback(new Error("API error (malformed API response): " + parsedData));
+				return callbackForPromise(
+					new TumblrError(406, `Cannot read Tumblr JSON: ${JSON.stringify(responseData, null, 2)}`)
+				);
 			});
 		});
 
 		request.on("error", (e) => {
-			if (callbackCalled) return;
-			callbackCalled = true;
+			if (responseEnded) return;
+			responseEnded = true;
 
-			callback(e);
+			callbackForPromise(e);
 		});
 
 		if (form) form.on("end", () => request.end());
@@ -760,5 +777,6 @@ function createClient(options) {
 
 module.exports = {
 	Client,
-	createClient
+	createClient,
+	TumblrError
 };
