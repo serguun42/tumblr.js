@@ -3,13 +3,13 @@ export class Client {
 	 * Package version
 	 * @readonly
 	 */
-	static readonly version: "4.1.0";
+	static readonly version: "4.1.1";
 	/**
 	 * Creates a Tumblr API client using the given options
 	 *
 	 * @param  {import('./types').Options} [options] - client options
 	 */
-	constructor(options?: import("./types").Options | undefined);
+	constructor(options?: import("./types").Options);
 	/**
 	 * Package version
 	 *
@@ -32,7 +32,7 @@ export class Client {
 	 *
 	 * @return {Promise<T>}
 	 */
-	getRequest<T extends any>(apiPath: string, params?: Record<string, any>): Promise<T> | undefined;
+	getRequest<T extends any>(apiPath: string, params?: Record<string, any>): Promise<T>;
 	/**
 	 * Performs a POST request
 	 *
@@ -54,10 +54,6 @@ export class Client {
 	 */
 	putRequest<T extends any>(apiPath: string, params?: Record<string, any>): Promise<T>;
 	/**
-	 * @deprecated Promises are returned if no callback is provided
-	 */
-	returnPromises(): void;
-	/**
 	 * Create or reblog an NPF post
 	 *
 	 * @see {@link https://www.tumblr.com/docs/en/api/v2#posts---createreblog-a-post-neue-post-format|API Docs}
@@ -74,35 +70,33 @@ export class Client {
 	 *   ],
 	 * });
 	 *
+	 * @template {any} T
 	 * @param  {string} blogIdentifier - blog name or URL
 	 * @param  {import('./types').NpfReblogParams | import('./types').NpfPostParams } params
-	 * @param  {TumblrClientCallback} [callback] **Deprecated** Omit the callback and use the promise form
 	 *
-	 * @return {Promise<any>|undefined} Promise if no callback is provided
+	 * @return {Promise<T>}
 	 */
-	createPost(
+	createPost<T extends any>(
 		blogIdentifier: string,
-		params: import("./types").NpfReblogParams | import("./types").NpfPostParams,
-		callback?: import("./types").TumblrClientCallback | undefined
-	): Promise<any> | undefined;
+		params: import("./types").NpfReblogParams | import("./types").NpfPostParams
+	): Promise<T>;
 	/**
 	 * Edit an NPF post
 	 *
 	 * @see {@link https://www.tumblr.com/docs/en/api/v2#postspost-id---editing-a-post-neue-post-format|API Docs}
 	 *
+	 * @template {any} T
 	 * @param  {string} blogIdentifier - blog name or URL
 	 * @param  {string} postId - Post ID
 	 * @param  {import('./types').NpfReblogParams | import('./types').NpfPostParams } params
-	 * @param  {TumblrClientCallback} [callback] **Deprecated** Omit the callback and use the promise form
 	 *
-	 * @return {Promise<any>|undefined} Promise if no callback is provided
+	 * @return {Promise<T>}
 	 */
-	editPost(
+	editPost<T extends any>(
 		blogIdentifier: string,
 		postId: string,
-		params: import("./types").NpfReblogParams | import("./types").NpfPostParams,
-		callback?: import("./types").TumblrClientCallback | undefined
-	): Promise<any> | undefined;
+		params: import("./types").NpfReblogParams | import("./types").NpfPostParams
+	): Promise<T>;
 	/**
 	 * Creates a post on the given blog.
 	 *
@@ -110,344 +104,250 @@ export class Client {
 	 *
 	 * @see {@link https://www.tumblr.com/docs/api/v2#posting|API Docs}
 	 *
+	 * @template {any} T
 	 * @param  {string} blogIdentifier - blog name or URL
 	 * @param  {Record<string,any>} params
-	 * @param  {TumblrClientCallback} [callback] **Deprecated** Omit the callback and use the promise form
 	 *
-	 * @return {Promise<any>|undefined} Promise if no callback is provided
+	 * @return {Promise<T>}
 	 */
-	createLegacyPost(
-		blogIdentifier: string,
-		params: Record<string, any>,
-		callback?: import("./types").TumblrClientCallback | undefined
-	): Promise<any> | undefined;
+	createLegacyPost<T extends any>(blogIdentifier: string, params: Record<string, any>): Promise<T>;
 	/**
 	 * Edits a given post
 	 *
 	 * @deprecated Legacy post creation methods are deprecated. Use NPF methods.
 	 *
+	 * @template {any} T
 	 * @param  {string} blogIdentifier - blog name or URL
 	 * @param  {Record<string,any>} params
-	 * @param  {TumblrClientCallback} [callback] **Deprecated** Omit the callback and use the promise form
 	 *
-	 * @return {Promise<any>|undefined} Promise if no callback is provided
+	 * @return {Promise<T>}
 	 */
-	editLegacyPost(
-		blogIdentifier: string,
-		params: Record<string, any>,
-		callback?: import("./types").TumblrClientCallback | undefined
-	): Promise<any> | undefined;
+	editLegacyPost<T extends any>(blogIdentifier: string, params: Record<string, any>): Promise<T>;
 	/**
 	 * Likes a post as the authenticating user
 	 *
+	 * @template {any} T
 	 * @param  {string} postId - ID of post to like
 	 * @param  {string} reblogKey - Reblog key of post to like
-	 * @param  {TumblrClientCallback} [callback] **Deprecated** Omit the callback and use the promise form
 	 *
-	 * @return {Promise<any>|undefined} Promise if no callback is provided
+	 * @return {Promise<T>}
 	 */
-	likePost(
-		postId: string,
-		reblogKey: string,
-		callback?: import("./types").TumblrClientCallback | undefined
-	): Promise<any> | undefined;
+	likePost<T extends any>(postId: string, reblogKey: string): Promise<T>;
 	/**
 	 * Unlikes a post as the authenticating user
 	 *
+	 * @template {any} T
 	 * @param  {string} postId - ID of post to like
 	 * @param  {string} reblogKey - Reblog key of post to like
-	 * @param  {TumblrClientCallback} [callback] **Deprecated** Omit the callback and use the promise form
 	 *
-	 * @return {Promise<any>|undefined} Promise if no callback is provided
+	 * @return {Promise<T>}
 	 */
-	unlikePost(
-		postId: string,
-		reblogKey: string,
-		callback?: import("./types").TumblrClientCallback | undefined
-	): Promise<any> | undefined;
+	unlikePost<T extends any>(postId: string, reblogKey: string): Promise<T>;
 	/**
 	 * Follows a blog as the authenticating user
 	 *
+	 * @template {any} T
 	 * @param  {{url: string}|{email:string}} params - parameters sent with the request
-	 * @param  {TumblrClientCallback} [callback] **Deprecated** Omit the callback and use the promise form
 	 *
-	 * @return {Promise<any>|undefined} Promise if no callback is provided
+	 * @return {Promise<T>}
 	 */
-	followBlog(
+	followBlog<T extends any>(
 		params:
 			| {
 					url: string;
 			  }
 			| {
 					email: string;
-			  },
-		callback?: import("./types").TumblrClientCallback | undefined
-	): Promise<any> | undefined;
+			  }
+	): Promise<T>;
 	/**
 	 * Unfollows a blog as the authenticating user
 	 *
+	 * @template {any} T
 	 * @param  {{url: string}} params - parameters sent with the request
-	 * @param  {TumblrClientCallback} [callback] **Deprecated** Omit the callback and use the promise form
 	 *
-	 * @return {Promise<any>|undefined} Promise if no callback is provided
+	 * @return {Promise<T>}
 	 */
-	unfollowBlog(
-		params: {
-			url: string;
-		},
-		callback?: import("./types").TumblrClientCallback | undefined
-	): Promise<any> | undefined;
+	unfollowBlog<T extends any>(params: { url: string }): Promise<T>;
 	/**
 	 * Deletes a given post
 	 *
+	 * @template {any} T
 	 * @param  {string} blogIdentifier - blog name or URL
 	 * @param  {string} postId - Post ID to delete
-	 * @param  {TumblrClientCallback} [callback] **Deprecated** Omit the callback and use the promise form
 	 *
-	 * @return {Promise<any>|undefined} Promise if no callback is provided
+	 * @return {Promise<T>}
 	 */
-	deletePost(
-		blogIdentifier: string,
-		postId: string,
-		callback?: import("./types").TumblrClientCallback | undefined
-	): Promise<any> | undefined;
+	deletePost<T extends any>(blogIdentifier: string, postId: string): Promise<T>;
 	/**
 	 * Reblogs a given post
 	 *
 	 * @deprecated Legacy post creation methods are deprecated. Use NPF methods.
 	 *
+	 * @template {any} T
 	 * @param  {string} blogIdentifier - blog name or URL
 	 * @param  {Record<string,any>} params - parameters sent with the request
-	 * @param  {TumblrClientCallback} [callback] **Deprecated** Omit the callback and use the promise form
 	 *
-	 * @return {Promise<any>|undefined} Promise if no callback is provided
+	 * @return {Promise<T>}
 	 */
-	reblogPost(
-		blogIdentifier: string,
-		params: Record<string, any>,
-		callback?: import("./types").TumblrClientCallback | undefined
-	): Promise<any> | undefined;
+	reblogPost<T extends any>(blogIdentifier: string, params: Record<string, any>): Promise<T>;
 	/**
 	 * Gets information about a given blog
 	 *
+	 * @template {any} T
 	 * @param  {string} blogIdentifier - blog name or URL
-	 * @param  {{'fields[blogs]'?: string}|TumblrClientCallback} [paramsOrCallback] - query parameters
-	 * @param  {TumblrClientCallback} [callback] **Deprecated** Omit the callback and use the promise form
+	 * @param  {{'fields[blogs]'?: string}} [params] - query parameters
 	 *
-	 * @return {Promise<any>|undefined} Promise if no callback is provided
+	 * @return {Promise<T>}
 	 */
-	blogInfo(
+	blogInfo<T extends any>(
 		blogIdentifier: string,
-		paramsOrCallback?:
-			| import("./types").TumblrClientCallback
-			| {
-					"fields[blogs]"?: string;
-			  }
-			| undefined,
-		callback?: import("./types").TumblrClientCallback | undefined
-	): Promise<any> | undefined;
+		params?: {
+			"fields[blogs]"?: string;
+		}
+	): Promise<T>;
 	/**
 	 * Gets the likes for a blog
 	 *
+	 * @template {any} T
 	 * @param  {string} blogIdentifier - blog name or URL
-	 * @param  {{limit?: number; offset?: number; before?: number; after?: number}|TumblrClientCallback} [paramsOrCallback] - optional data sent with the request
-	 * @param  {TumblrClientCallback} [callback] **Deprecated** Omit the callback and use the promise form
+	 * @param  {{limit?: number; offset?: number; before?: number; after?: number}} [params] - optional data sent with the request
 	 *
-	 * @return {Promise<any>|undefined} Promise if no callback is provided
+	 * @return {Promise<T>}
 	 */
-	blogLikes(
+	blogLikes<T extends any>(
 		blogIdentifier: string,
-		paramsOrCallback?:
-			| import("./types").TumblrClientCallback
-			| {
-					limit?: number;
-					offset?: number;
-					before?: number;
-					after?: number;
-			  }
-			| undefined,
-		callback?: import("./types").TumblrClientCallback | undefined
-	): Promise<any> | undefined;
+		params?: {
+			limit?: number;
+			offset?: number;
+			before?: number;
+			after?: number;
+		}
+	): Promise<T>;
 	/**
 	 * Gets the followers for a blog
 	 *
+	 * @template {any} T
 	 * @param  {string} blogIdentifier - blog name or URL
-	 * @param  {{limit?: number; offset?: number}|TumblrClientCallback} [paramsOrCallback] - optional data sent with the request
-	 * @param  {TumblrClientCallback} [callback] **Deprecated** Omit the callback and use the promise form
+	 * @param  {{limit?: number; offset?: number}} [params] - optional data sent with the request
 	 *
-	 * @return {Promise<any>|undefined} Promise if no callback is provided
+	 * @return {Promise<T>}
 	 */
-	blogFollowers(
+	blogFollowers<T extends any>(
 		blogIdentifier: string,
-		paramsOrCallback?:
-			| import("./types").TumblrClientCallback
-			| {
-					limit?: number;
-					offset?: number;
-			  }
-			| undefined,
-		callback?: import("./types").TumblrClientCallback | undefined
-	): Promise<any> | undefined;
+		params?: {
+			limit?: number;
+			offset?: number;
+		}
+	): Promise<T>;
 	/** @type {import('./types').BlogPosts<Client>} */
 	blogPosts: import("./types").BlogPosts<Client>;
 	/**
 	 * Gets the queue for a blog
 	 *
+	 * @template {any} T
 	 * @param  {string} blogIdentifier - blog name or URL
-	 * @param  {{limit?: number; offset?: number; filter?: 'text'|'raw'}|TumblrClientCallback} [paramsOrCallback] - optional data sent with the request
-	 * @param  {TumblrClientCallback} [callback] **Deprecated** Omit the callback and use the promise form
+	 * @param  {{limit?: number; offset?: number; filter?: 'text'|'raw'}} [params] - optional data sent with the request
 	 *
-	 * @return {Promise<any>|undefined} Promise if no callback is provided
+	 * @return {Promise<T>}
 	 */
-	blogQueue(
+	blogQueue<T extends any>(
 		blogIdentifier: string,
-		paramsOrCallback?:
-			| import("./types").TumblrClientCallback
-			| {
-					limit?: number;
-					offset?: number;
-					filter?: "text" | "raw";
-			  }
-			| undefined,
-		callback?: import("./types").TumblrClientCallback | undefined
-	): Promise<any> | undefined;
+		params?: {
+			limit?: number;
+			offset?: number;
+			filter?: "text" | "raw";
+		}
+	): Promise<T>;
 	/**
 	 * Gets the drafts for a blog
 	 *
+	 * @template {any} T
 	 * @param  {string} blogIdentifier - blog name or URL
-	 * @param  {{before_id?: number; filter?: PostFormatFilter}|TumblrClientCallback} [paramsOrCallback] - optional data sent with the request
-	 * @param  {TumblrClientCallback} [callback] **Deprecated** Omit the callback and use the promise form
+	 * @param  {{before_id?: number; filter?: PostFormatFilter}} [params] - optional data sent with the request
 	 *
-	 * @return {Promise<any>|undefined} Promise if no callback is provided
+	 * @return {Promise<T>}
 	 */
-	blogDrafts(
+	blogDrafts<T extends any>(
 		blogIdentifier: string,
-		paramsOrCallback?:
-			| import("./types").TumblrClientCallback
-			| {
-					before_id?: number;
-					filter?: import("./types").PostFormatFilter;
-			  }
-			| undefined,
-		callback?: import("./types").TumblrClientCallback | undefined
-	): Promise<any> | undefined;
+		params?: {
+			before_id?: number;
+			filter?: import("./types").PostFormatFilter;
+		}
+	): Promise<T>;
 	/**
 	 * Gets the submissions for a blog
 	 *
+	 * @template {any} T
 	 * @param  {string} blogIdentifier - blog name or URL
-	 * @param  {{offset?: number; filter?: PostFormatFilter}|TumblrClientCallback} [paramsOrCallback] - optional data sent with the request
-	 * @param  {TumblrClientCallback} [callback] **Deprecated** Omit the callback and use the promise form
+	 * @param  {{offset?: number; filter?: PostFormatFilter}} [params] - optional data sent with the request
 	 *
-	 * @return {Promise<any>|undefined} Promise if no callback is provided
+	 * @return {Promise<T>}
 	 */
-	blogSubmissions(
+	blogSubmissions<T extends any>(
 		blogIdentifier: string,
-		paramsOrCallback?:
-			| import("./types").TumblrClientCallback
-			| {
-					offset?: number;
-					filter?: import("./types").PostFormatFilter;
-			  }
-			| undefined,
-		callback?: import("./types").TumblrClientCallback | undefined
-	): Promise<any> | undefined;
+		params?: {
+			offset?: number;
+			filter?: import("./types").PostFormatFilter;
+		}
+	): Promise<T>;
 	/**
 	 * Gets the avatar URL for a blog
 	 *
+	 * @template {any} T
 	 * @param  {string} blogIdentifier - blog name or URL
-	 * @param  {16|24|30|40|48|64|96|128|512|TumblrClientCallback} [sizeOrCallback] - optional data sent with the request
-	 * @param  {TumblrClientCallback} [maybeCallback] - invoked when the request completes
+	 * @param  {16|24|30|40|48|64|96|128|512} [sizeOrCallback] - optional data sent with the request
 	 *
-	 * @return {Promise<any>|undefined} Promise if no callback is provided
+	 * @return {Promise<T>}
 	 */
-	blogAvatar(
+	blogAvatar<T extends any>(
 		blogIdentifier: string,
-		sizeOrCallback?:
-			| import("./types").TumblrClientCallback
-			| 16
-			| 24
-			| 30
-			| 40
-			| 48
-			| 64
-			| 96
-			| 128
-			| 512
-			| undefined,
-		maybeCallback?: import("./types").TumblrClientCallback | undefined
-	): Promise<any> | undefined;
+		sizeOrCallback?: 16 | 24 | 30 | 40 | 48 | 64 | 96 | 128 | 512
+	): Promise<T>;
 	/**
 	 * Gets information about the authenticating user and their blogs
 	 *
-	 * @param  {TumblrClientCallback} [callback] **Deprecated** Omit the callback and use the promise form
-	 *
-	 * @return {Promise<any>|undefined} Promise if no callback is provided
+	 * @template {any} T
+	 * @return {Promise<T>}
 	 */
-	userInfo(callback?: import("./types").TumblrClientCallback | undefined): Promise<any> | undefined;
+	userInfo<T extends any>(): Promise<T>;
 	/**
 	 * Gets the dashboard posts for the authenticating user
 	 *
-	 * @param  {Record<string,any>|TumblrClientCallback} [paramsOrCallback] - query parameters
-	 * @param  {TumblrClientCallback} [callback] **Deprecated** Omit the callback and use the promise form
+	 * @template {any} T
+	 * @param  {Record<string,any>} [params] - query parameters
 	 *
-	 * @return {Promise<any>|undefined} Promise if no callback is provided
+	 * @return {Promise<T>}
 	 */
-	userDashboard(
-		paramsOrCallback?: Record<string, any> | import("./types").TumblrClientCallback | undefined,
-		callback?: import("./types").TumblrClientCallback | undefined
-	): Promise<any> | undefined;
+	userDashboard<T extends any>(params?: Record<string, any>): Promise<T>;
 	/**
 	 * Gets the blogs the authenticating user follows
 	 *
-	 * @param  {{limit?: number; offset?: number;}|TumblrClientCallback} [paramsOrCallback] - query parameters
-	 * @param  {TumblrClientCallback} [callback] **Deprecated** Omit the callback and use the promise form
+	 * @template {any} T
+	 * @param  {{limit?: number; offset?: number;}} [params] - query parameters
 	 *
-	 * @return {Promise<any>|undefined} Promise if no callback is provided
+	 * @return {Promise<T>}
 	 */
-	userFollowing(
-		paramsOrCallback?:
-			| import("./types").TumblrClientCallback
-			| {
-					limit?: number;
-					offset?: number;
-			  }
-			| undefined,
-		callback?: import("./types").TumblrClientCallback | undefined
-	): Promise<any> | undefined;
+	userFollowing<T extends any>(params?: { limit?: number; offset?: number }): Promise<T>;
 	/**
 	 * Gets the likes for the authenticating user
 	 *
-	 * @param  {{limit?: number; offset?: number; before?: number; after?: number}|TumblrClientCallback} [paramsOrCallback] - query parameters
-	 * @param  {TumblrClientCallback} [callback] **Deprecated** Omit the callback and use the promise form
+	 * @template {any} T
+	 * @param  {{limit?: number; offset?: number; before?: number; after?: number}} [params] - query parameters
 	 *
-	 * @return {Promise<any>|undefined} Promise if no callback is provided
+	 * @return {Promise<T>}
 	 */
-	userLikes(
-		paramsOrCallback?:
-			| import("./types").TumblrClientCallback
-			| {
-					limit?: number;
-					offset?: number;
-					before?: number;
-					after?: number;
-			  }
-			| undefined,
-		callback?: import("./types").TumblrClientCallback | undefined
-	): Promise<any> | undefined;
+	userLikes<T extends any>(params?: { limit?: number; offset?: number; before?: number; after?: number }): Promise<T>;
 	/**
 	 * Gets posts tagged with the specified tag
 	 *
+	 * @template {any} T
 	 * @param  {string} tag - The tag on the posts you'd like to retrieve
-	 * @param  {Record<string,any>|TumblrClientCallback} [paramsOrCallback] - query parameters
-	 * @param  {TumblrClientCallback} [callback] **Deprecated** Omit the callback and use the promise form
+	 * @param  {Record<string,any>} [params] - query parameters
 	 *
-	 * @return {Promise<any>|undefined} Promise if no callback is provided
+	 * @return {Promise<T>}
 	 */
-	taggedPosts(
-		tag: string,
-		paramsOrCallback?: Record<string, any> | import("./types").TumblrClientCallback | undefined,
-		callback?: import("./types").TumblrClientCallback | undefined
-	): Promise<any> | undefined;
+	taggedPosts<T extends any>(tag: string, params?: Record<string, any>): Promise<T>;
 	#private;
 }
 /**
@@ -459,5 +359,5 @@ export class Client {
  *
  * @see {@link Client}
  */
-export function createClient(options?: import("./types").Options | undefined): Client;
+export function createClient(options?: import("./types").Options): Client;
 //# sourceMappingURL=tumblr.d.ts.map
