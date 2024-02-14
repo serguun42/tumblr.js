@@ -1,12 +1,12 @@
 # @serguun42/tumblr.js
 
-Modified TypeScript & JavaScript client library for the [Tumblr API](http://www.tumblr.com/docs/api/v2) modified by [@serguun42](https://github.com/serguun42) under the same license.
+TypeScript & JavaScript client library for the [Tumblr API](http://www.tumblr.com/docs/api/v2) modified by [@serguun42](https://github.com/serguun42) under the same license.
 
 Check out [the detailed documentation here](https://tumblr.github.io/tumblr.js/), [the original package](https://www.npmjs.com/package/tumblr.js) and [repository](https://github.com/tumblr/tumblr.js).
 
 ## Installation
 
-Install this package from [npm][npm-package]:
+Install this package from [npm][https://www.npmjs.com/package/@serguun42/tumblr.js]:
 
 ```bash
 npm install --save @serguun42/tumblr.js
@@ -251,5 +251,3 @@ http://www.apache.org/licenses/LICENSE-2.0
 Unless required by applicable law or agreed to in writing, software distributed under the License is
 distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
 implied. See the License for the specific language governing permissions and limitations.
-
-[npm-package]: https://www.npmjs.com/package/tumblr.js
