@@ -1,6 +1,6 @@
 {
 	"name": "@serguun42/tumblr.js",
-	"version": "4.0.2",
+	"version": "4.1.0",
 	"description": "Modified TypeScript & JavaScript client for the Tumblr API",
 	"main": "./tumblr.js",
 	"type": "commonjs",

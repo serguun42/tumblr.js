@@ -17,7 +17,7 @@ class Client {
 	 * Package version
 	 * @readonly
 	 */
-	static version = "4.0.2";
+	static version = "4.1.0";
 
 	/**
 	 * @typedef {import('./types').TumblrClientCallback} TumblrClientCallback
@@ -168,13 +168,13 @@ class Client {
 	/**
 	 * Performs a GET request
 	 *
+	 * @template {any} T
 	 * @param  {string} apiPath - URL path for the request
-	 * @param  {Record<string,any>|TumblrClientCallback} [paramsOrCallback] - query parameters
-	 * @param  {TumblrClientCallback} [callback] **Deprecated** Omit the callback and use the promise form
+	 * @param  {Record<string, any>} [params] - query parameters
 	 *
-	 * @return {Promise<any>|undefined} Promise if no callback is provided
+	 * @return {Promise<T>}
 	 */
-	getRequest(apiPath, paramsOrCallback, callback) {
+	getRequest(apiPath, params) {
 		let params = paramsOrCallback;
 		if (typeof params === "function") {
 			callback = /** @type {TumblrClientCallback} */ (params);
@@ -183,7 +183,7 @@ class Client {
 
 		const [url, requestData] = this.#prepareRequestUrlAndRequestData(apiPath, "GET", params);
 
-		return this.#makeRequest(url, "GET", requestData, callback);
+		return this.#makeRequest(url, "GET", requestData);
 	}
 
 	/**
@@ -407,11 +407,11 @@ class Client {
 	/**
 	 * Performs a POST request
 	 *
+	 * @template {any} T
 	 * @param  {string} apiPath - URL path for the request
-	 * @param  {Record<string,any>|TumblrClientCallback} [paramsOrCallback]
-	 * @param  {TumblrClientCallback} [callback] **Deprecated** Omit the callback and use the promise form
+	 * @param  {Record<string, any>} [params] - query parameters
 	 *
-	 * @return {Promise<any>|undefined} Promise if no callback was provided
+	 * @return {Promise<T>}
 	 */
 	postRequest(apiPath, paramsOrCallback, callback) {
 		let params = paramsOrCallback;
@@ -428,11 +428,11 @@ class Client {
 	/**
 	 * Performs a PUT request
 	 *
+	 * @template {any} T
 	 * @param  {string} apiPath - URL path for the request
-	 * @param  {Record<string,any>|TumblrClientCallback} [paramsOrCallback]
-	 * @param  {TumblrClientCallback} [callback] **Deprecated** Omit the callback and use the promise form
+	 * @param  {Record<string, any>} [params] - query parameters
 	 *
-	 * @return {Promise<any>|undefined} Promise if no callback was provided
+	 * @return {Promise<T>}
 	 */
 	putRequest(apiPath, paramsOrCallback, callback) {
 		let params = paramsOrCallback;

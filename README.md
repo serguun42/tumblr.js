@@ -6,10 +6,10 @@ Check out [the detailed documentation here](https://tumblr.github.io/tumblr.js/)
 
 ## Installation
 
-Install this package from [npm][https://www.npmjs.com/package/@serguun42/tumblr.js]:
+Install this package from [npm](https://www.npmjs.com/package/@serguun42/tumblr.js):
 
 ```bash
-npm install --save @serguun42/tumblr.js
+npm i @serguun42/tumblr.js
 ```
 
 ## Usage
